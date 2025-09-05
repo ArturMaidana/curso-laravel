@@ -8,6 +8,8 @@ use App\Repositories\{SupportEloquentORM};
 use App\Repositories\Contracts\{ReplyRepositoryInterface, SupportRepositoryInterface};
 use App\Repositories\Eloquent\ReplySupportRepository;
 use Illuminate\Support\ServiceProvider;
+use App\Repositories\{ForumEloquentORM};
+use App\Repositories\ForumRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,6 +19,8 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(
+            ForumRepositoryInterface::class,
+            ForumEloquentORM::class,
             SupportRepositoryInterface::class,
             SupportEloquentORM::class
         );

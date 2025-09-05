@@ -3,14 +3,29 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Forum;
+use App\Http\Requests\StoreUpdateForum;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\DTO\Forum\CreateForumDTO;
+use App\DTO\Forum\UpdateForumDTO;
+use App\Services\ForumService;
+
 
 class ForumController extends Controller
+
 {
-    public function index(Forum $forum)
+
+    public function __construct(
+        protected ForumService $service)
+    { }
+
+    public function index(Request $request)
     {
-        $forums = $forum->all();
+        $forums = $this->service->paginate(
+            page: $request->get('page', 1),
+            totalPerPage: $request->get('per_page', 15),
+            filter: $request->filter,
+        );
 
         return view('admin/forums/index', compact('forums'));
     }
@@ -20,7 +35,7 @@ class ForumController extends Controller
         //Forum::find($find)
         //Forum::where('id, $id)->first();
         //Forum::where('id', '!=', $id)->first();
-        if(!$forum = Forum::find($id)){
+        if(!$forum = $this->service->findOne($id)){
             return redirect()->back();
         }
 
@@ -33,49 +48,42 @@ class ForumController extends Controller
         return view('admin/forums/create');
     }
 
-    public function store(Request $request, Forum $forum)
+    public function store(StoreUpdateForum  $request, Forum $forum)
     {
-        $data = $request->all();
-        $data['status'] = 'a';
-
-        $forum->create($data);
+        $this->service->new(
+            CreateForumDTO::makeFromRequest($request)
+        );
 
         return redirect()->route('forum.index');
 
     }
 
-    public function edit(Forum $forum,  string|int $id)
+    public function edit(string $id)
     {
-        if(!$forum = $forum->where('id', $id)->first()){
+        if(!$forum = $this->service->findOne($id)){
             return back();
         }
         return view('admin/forums/edit', compact('forum'));
     }
 
-    public function update(Request $request, Forum $forum, string $id){
+    public function update(StoreUpdateForum $request, Forum $forum, string $id){
 
-        if(!$forum = $forum->find($id)){
+
+        $forum = $this->service->update(
+            UpdateForumDTO::makeFromRequest($request)
+        );
+
+        if(!$forum){
             return back();
         }
-
-        // $forum->subject = $request->subject;
-        // $forum->body = $request->body;
-        // $forum->save();
-
-        $forum->update($request->only([
-            'subject', 'body'
-        ]));
 
         return redirect()->route('forum.index');
 
     }
 
-    public function destroy(string|int $id)
+    public function destroy(string $id)
     {
-        if(!$forum = Forum::find($id)){
-            return back();
-        }
-        $forum->delete();
+        $this->service->delete($id);
 
         return redirect()->route('forum.index');
     }

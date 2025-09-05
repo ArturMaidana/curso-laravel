@@ -31,7 +31,7 @@ class ForumEloquentORM implements ForumRepositoryInterface
                         }
                     })
                     ->paginate($totalPerPage, ['*'], 'page', $page);
-        dd($result);
+        return new PaginationPresente($result);
     }
 
     public function getAll(string $filter = null): array

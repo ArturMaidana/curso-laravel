@@ -5,7 +5,7 @@ namespace App\Repositories;
 use stdClass;
 use App\DTO\Forum\CreateForumDTO;
 use App\DTO\Forum\UpdateForumDTO;
-use App\Pagination\PaginationInterface;
+use App\Repositories\PaginationInterface;
 
 interface ForumRepositoryInterface
 {

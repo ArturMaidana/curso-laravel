@@ -3,6 +3,7 @@
 namespace App\Repositories;
 use stdClass;
 
+
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class PaginationPresente implements PaginationInterface
@@ -24,7 +25,9 @@ class PaginationPresente implements PaginationInterface
 
     public function items(): array
     {
-
+        return array_map(function ($item) {
+                    return (object) (is_array($item) ? $item : $item->toArray());
+                }, $this->paginator->items());
 
     }
 

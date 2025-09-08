@@ -6,7 +6,7 @@ use stdClass;
 use App\DTO\Forum\CreateForumDTO;
 use App\DTO\Forum\UpdateForumDTO;
 use App\Repositories\ForumRepositoryInterface;
-
+use App\Repositories\PaginationInterface;
 
 class ForumService
 {
@@ -23,7 +23,7 @@ class ForumService
         int $page = 1,
         int $totalPerPage = 15,
         string $filter = null
-    ){
+    ): PaginationInterface{
         return $this->repository->paginate(
             page: $page,
             totalPerPage: $totalPerPage,

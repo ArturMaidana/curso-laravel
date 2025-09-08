@@ -3,19 +3,20 @@
 namespace App\DTO\Forum;
 
 use App\Http\Requests\StoreUpdateForum;
+use App\Enums\ForumStatus;
 
 class CreateForumDTO
 {
     public function __construct(
         public string $subject,
-        public string $status,
+        public ForumStatus $status,
         public string $body,
     ){}
 
     public static function makeFromRequest(StoreUpdateForum $request): self{
         return new self(
             $request->subject,
-            'a',
+            ForumStatus::A,
             $request->body
         );
     }

@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\{SupportController};
 use App\Http\Controllers\Site\SiteController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\{ForumController};
+use App\Enums\ForumStatus;
 
 Route::get('/contato', [SiteController::class, 'contact']);
 
@@ -12,8 +13,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/test', function (){
+    dd(array_column(ForumStatus::cases(), 'name'));
+});
 Route::delete('/forum/{id}', [ForumController::class, 'destroy'])->name('forum.destroy');
-
 Route::put('/forum/{id}', [ForumController::class, 'update'])->name('forum.update');
 Route::get('/forum/{id}/edit', [ForumController::class, 'edit'])->name('forum.edit');
 Route::get('/forum/create', [ForumController::class, 'create'])->name('forum.create');

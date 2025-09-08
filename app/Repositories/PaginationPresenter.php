@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Repositories\Contracts\PaginationInterface;
+use App\Repositories\PaginationInterface;
 use Illuminate\Pagination\LengthAwarePaginator;
 use stdClass;
 

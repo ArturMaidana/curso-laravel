@@ -2,14 +2,14 @@
 
 namespace App\DTO\Forum;
 use App\Http\Requests\StoreUpdateForum;
-
+use App\Enums\ForumStatus;
 
 class UpdateForumDTO
 {
     public function __construct(
         public string $id,
         public string $subject,
-        public string $status,
+        public ForumStatus $status,
         public string $body,
     ){}
 
@@ -17,7 +17,7 @@ class UpdateForumDTO
         return new self(
             $request->id,
             $request->subject,
-            'a',
+            ForumStatus::A,
             $request->body
         );
     }

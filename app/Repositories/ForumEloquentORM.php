@@ -6,7 +6,10 @@ use App\DTO\Forum\CreateForumDTO;
 use App\DTO\Forum\UpdateForumDTO;
 use App\Models\Forum;
 use App\Repositories\ForumRepositoryInterface;
-use App\Pagination\PaginationInterface;
+use App\Repositories\PaginationInterface;
+use App\Repositories\PaginationPresente;
+use Illuminate\Pagination\LengthAwarePaginator;
+
 
 
 class ForumEloquentORM implements ForumRepositoryInterface

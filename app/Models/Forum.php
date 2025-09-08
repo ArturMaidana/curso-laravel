@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use App\Enums\ForumStatus;
 
 class Forum extends Model
 {
@@ -14,4 +16,11 @@ class Forum extends Model
         'body',
         'status'
     ];
+
+    public function status(): Attribute
+    {
+        return Attribute::make(
+            set: fn(ForumStatus $status) => $status->name,
+        );
+    }
 }

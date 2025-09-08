@@ -31,13 +31,13 @@ class StoreUpdateForum extends FormRequest
             ]
         ];
 
-        if($this->method() === 'PUT'){
+        if ($this->method() === 'PUT' || $this->method() === 'PATCH') {
             $rules['subject'] = [
-                'required',
+                'required', // 'nullable',
                 'min:3',
-                'max: 255',
-                // "unique:forums,subject,{$this->id}, id",
-                Rule::unique('forums')->ignore($this->id),
+                'max:255',
+                // "unique:forums,subject,{$this->id},id",
+                Rule::unique('forums')->ignore($this->forum ?? $this->id),
             ];
         }
 

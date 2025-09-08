@@ -13,9 +13,9 @@ class UpdateForumDTO
         public string $body,
     ){}
 
-    public static function makeFromRequest(StoreUpdateForum $request): self{
+    public static function makeFromRequest(StoreUpdateForum $request, string $id = null): self{
         return new self(
-            $request->id,
+            $id ?? $request->id,
             $request->subject,
             ForumStatus::A,
             $request->body

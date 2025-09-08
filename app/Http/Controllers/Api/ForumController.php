@@ -10,6 +10,9 @@ use App\DTO\Forum\CreateForumDTO;
 use App\DTO\Forum\UpdateForumDTO;
 use App\Http\Resources\ForumResource;
 use Symfony\Component\HttpFoundation\Response;
+use App\Models\Forum;
+use App\Adapters\ApiAdapter;
+
 
 
 class ForumController extends Controller
@@ -20,8 +23,14 @@ class ForumController extends Controller
         $this->service = $forumService;
     }
 
-    public function index(){
-
+    public function index(Request $request)
+    {
+        $forum = $this->service->paginate(
+            page: $request->get('page', 1),
+            totalPerPage: $request->get('per_page', 1),
+            filter: $request->filter,
+        );
+        return ApiAdapter::toJson($forum);
     }
 
     public function store( StoreUpdateForum $request){

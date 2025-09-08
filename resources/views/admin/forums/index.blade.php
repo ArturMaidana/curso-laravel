@@ -1,3 +1,14 @@
+@extends('admin.templates.app')
+
+@section('title', 'Fórums')
+
+@section('header')
+
+
+@endsection
+
+@section('content')
+
 <h1>Listagems dos supports</h1>
 
 <a href="{{ route('forum.create')}}">Criar Dúvida</a>
@@ -26,3 +37,5 @@
 </table>
 
 <x-pagination :paginator="$forums" :appends="$filters" />
+
+@endsection
